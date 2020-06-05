@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ASP.Lab.Data;
@@ -27,7 +28,7 @@ namespace ASP.Lab.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("GetAllCategories", "Home");
         }
 
         [HttpPost]
@@ -81,5 +82,63 @@ namespace ASP.Lab.Controllers
         {
             return View();
         }
+
+        [Route("Home/List")]
+        [Route("Home/List/{category}")]
+        public IActionResult List(string category)
+        {
+            var _category = category;
+            IEnumerable<Site> sites = null;
+            var currCategory = string.Empty;
+            if (string.IsNullOrEmpty(category))
+            {
+                sites = _allSites.Sites.OrderBy(i => i.Id);
+            }
+            else
+            {
+                if (string.Equals("News", category, StringComparison.OrdinalIgnoreCase))
+                {
+                    sites = _allSites.Sites.Where(c => c.Category.Name.Equals("News")).OrderBy(i => i.Id);
+                    currCategory = "News";
+                }
+                else if (string.Equals("Sport", category, StringComparison.OrdinalIgnoreCase))
+                {
+                    sites = _allSites.Sites.Where(c => c.Category.Name.Equals("Sport")).OrderBy(i => i.Id);
+                    currCategory = "Sport";
+                }
+                else if (string.Equals("Other", category, StringComparison.OrdinalIgnoreCase))
+                {
+                    sites = _allSites.Sites.Where(c => c.Category.Name.Equals("Other")).OrderBy(i => i.Id);
+                    currCategory = "Other";
+                }
+            }
+
+            var obj = new SiteListViewModel();
+            //TODO if zero sites return smt
+            obj.AllSites = sites.ToList();
+            obj.CurrCategory = "Sites table";
+
+            ViewBag.Title = "Page with cars";
+            return View(obj);
+        }
+        [Route("Home/ListCustom")]
+        [Route("Home/ListCustom/{category}")]
+        public IActionResult ListCustom(string category)
+        {
+            IEnumerable<Site> sites = null;
+            var currCategory = string.Empty;
+            if (!string.IsNullOrEmpty(category))
+            {
+                sites = _allSites.Sites.Where(c => c.Category.Name.Equals(category)).OrderBy(i => i.Id);
+            }
+            var obj = new SiteListViewModel();
+            //TODO if zero sites return smt
+            obj.AllSites = sites.ToList();
+            obj.CurrCategory = "Sites table";
+
+            ViewBag.Title = "Page with cars";
+            return View(obj);
+        }
+
     }
 }
