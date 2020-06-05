@@ -1,0 +1,25 @@
+﻿<div class="mt-5">
+    <h1>All Category</h1>
+    <div class="row mt-5 mb-2">
+        @{
+            foreach (var category in Model.AllCategory)
+            {
+                string imageBase64Data = Convert.ToBase64String(category.Image);
+
+                var imageDataUrl = $"data:image/*;base64,{imageBase64Data}";
+
+                <div class="col-4">
+                    <img class="img-thumbnail" src="@imageDataUrl" alt="@category.Name" width="300" height="300" />
+
+                    <h2>@category.Name</h2>
+
+                    <p>@category.Description</p>
+
+                    <form action="/Home/list/@category.Name">
+                        <button class="btn-warning">Click me</button>
+                    </form>
+                </div>
+            }
+        }
+    </div>
+</div>

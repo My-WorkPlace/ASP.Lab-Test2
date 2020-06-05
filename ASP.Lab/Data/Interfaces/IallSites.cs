@@ -3,7 +3,7 @@ using ASP.Lab.Models;
 
 namespace ASP.Lab.Data.Interfaces
 {
-    interface IallSites
+    public interface IallSites
     {
         IEnumerable<Site> Sites { get; }
         Site GetSiteById(int id);

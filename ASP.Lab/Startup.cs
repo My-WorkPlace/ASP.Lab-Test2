@@ -1,4 +1,6 @@
 using ASP.Lab.Data;
+using ASP.Lab.Data.Interfaces;
+using ASP.Lab.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +30,8 @@ namespace ASP.Lab
             // add context AppContextDataBase such as service
             services.AddDbContext<AppDBContent>(options =>
                 options.UseSqlServer(connection));
-            //services.AddTransient<IAllSites, SiteRepository>();
-            //services.AddTransient<ISitesCategory, CategoryRepository>();
+            services.AddTransient<IallSites, SiteRepository>();
+            services.AddTransient<ISitesCategory, CategoryRepository>();
             services.AddMvc(mvcOptions =>
             {
                 mvcOptions.EnableEndpointRouting = false;
