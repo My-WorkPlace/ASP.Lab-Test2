@@ -1,0 +1,33 @@
+﻿<form asp-action="UploadImage"
+      asp-controller="Home"
+      method="post"
+      enctype="multipart/form-data">
+    <input type="file" id="file1"
+           name="file1"
+           multiple="multiple" />
+    <button type="submit">Upload File(s)</button>
+</form>
+<h1>@ViewBag.Message</h1>
+<h1>@ViewBag.ImageTitle</h1>
+<img src="@ViewBag.ImageDataUrl" />
+
+
+
+@*<div class="mt-5">
+    <h1>All Category</h1>
+    <div class="row mt-5 mb-2">
+        @{
+                foreach (var category in Model.AllCategory)
+                {
+                    <div class="col-4">
+                        <img class="img-thumbnail" src="@category.Image" alt="@category.Name" width="300" height="300" />
+                        <h2>@category.Name</h2>
+                        <p>@category.Description</p>
+                        <form action="/Home/list/@category.Name">
+                            <button class="btn-warning">Click me</button>
+                        </form>
+                    </div>
+                }
+            }
+    </div>
+</div>*@
