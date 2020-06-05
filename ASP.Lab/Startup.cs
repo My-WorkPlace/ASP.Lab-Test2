@@ -1,23 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ASP.Lab.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace ASP.Lab
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private DBObjects DbObjects { get; set; }
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            DbObjects = new DBObjects(hostingEnvironment);
         }
 
         public IConfiguration Configuration { get; }
@@ -64,6 +62,12 @@ namespace ASP.Lab
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                
+                AppDBContent context = scope.ServiceProvider.GetRequiredService<AppDBContent>();
+                DbObjects.Initial(context);
+            }
         }
     }
 }
