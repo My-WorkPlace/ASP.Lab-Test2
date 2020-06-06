@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ASP.Lab.Data;
 using ASP.Lab.Data.Interfaces;
 using ASP.Lab.Models;
 using ASP.Lab.ViewModels;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -45,6 +43,34 @@ namespace ASP.Lab.Controllers
             //return RedirectToAction("Index", "Home");
             //return View("~/Views/Home/Index.cshtml");
             return View("../Home/Index", obj);
+        }
+
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UploadImage(Category model)
+        {
+            foreach (var file in Request.Form.Files)
+            {
+                Category img = new Category();
+                img.Name = model.Name;
+                img.Description = model.Description;
+
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                img.Image = ms.ToArray();
+
+                ms.Close();
+                ms.Dispose();
+
+                _content.Categories.Add(img);
+                _content.SaveChanges();
+            }
+            ViewBag.Message = "Image(s) stored in database!";
+            return RedirectToAction("GetAllCategories", "Home");
         }
     }
 }

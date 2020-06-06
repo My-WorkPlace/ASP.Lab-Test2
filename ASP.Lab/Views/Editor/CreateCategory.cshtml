@@ -1,0 +1,50 @@
+﻿@model Category
+<div class="col-md-10 mx-auto py-4">
+    <div class="card">
+        <div class="card-header bg-primary text-uppercase text-white">
+            <h4>Add New </h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="UploadImage"
+                  asp-controller="Editor"
+                  method="post"
+                  enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="file" id="file1"
+                                   name="file1"
+                                   multiple="multiple" />
+
+                            @*<label asp-for="Image" class="control-label"></label>
+                                <div class="custom-file">
+                                    <input asp-for="Image" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                                <span asp-validation-for="Image" class="text-danger"></span>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="submit" class="btn btn-sm btn-primary rounded-0 text-uppercase" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
