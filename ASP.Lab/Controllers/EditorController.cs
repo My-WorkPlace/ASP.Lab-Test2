@@ -51,7 +51,7 @@ namespace ASP.Lab.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadImage(Category model)
+        public async Task<IActionResult> UploadImage(Category model)
         {
             foreach (var file in Request.Form.Files)
             {
@@ -67,7 +67,7 @@ namespace ASP.Lab.Controllers
                 ms.Dispose();
 
                 _content.Categories.Add(img);
-                _content.SaveChanges();
+                await _content.SaveChangesAsync();
             }
             ViewBag.Message = "Image(s) stored in database!";
             return RedirectToAction("GetAllCategories", "Home");
