@@ -42,7 +42,7 @@ namespace ASP.Lab.Controllers
             //return Redirect($"{path}/Home/Index");
             //return RedirectToAction("Index", "Home");
             //return View("~/Views/Home/Index.cshtml");
-            return View("../Home/Index", obj);
+            return RedirectToAction("GetAllCategories", "Home");
         }
 
         public IActionResult CreateCategory()
